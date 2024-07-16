@@ -1,6 +1,20 @@
 const request = require('supertest');
 const app = require('../../src/app');
 
+let server;
+
+beforeAll((done) => {
+  server = app.listen(0, () => {
+    const port = server.address().port;
+    global.port = port; // Save port to use it in tests
+    done();
+  });
+});
+
+afterAll((done) => {
+  server.close(done);
+});
+
 describe('Member Integration', () => {
   test('Member registration', async () => {
     const response = await request(app)

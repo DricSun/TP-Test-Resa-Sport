@@ -1,26 +1,23 @@
-const { Builder, By, until } = require('selenium-webdriver');
-require('chromedriver');
-
-let driver;
-
-beforeAll(async () => {
-  driver = await new Builder().forBrowser('chrome').build();
-});
-
-afterAll(async () => {
-  await driver.quit();
-});
-
 describe('Member System Test', () => {
+  beforeAll(async () => {
+    await page.goto('http://localhost:3000/memberRegistration.html');
+  }, 120000); // Augmenter le délai d'attente pour beforeAll
+
+  afterAll(async () => {
+    await browser.close();
+  }, 120000); // Augmenter le délai d'attente pour afterAll
+
   test('Member registration', async () => {
-    await driver.get('http://localhost:3000/memberRegistration.html');
-    await driver.wait(until.elementLocated(By.id('firstName')), 10000); // Attente explicite
-    await driver.findElement(By.id('firstName')).sendKeys('John');
-    await driver.findElement(By.id('lastName')).sendKeys('Doe');
-    await driver.findElement(By.id('email')).sendKeys('john.doe@example.com');
-    await driver.findElement(By.id('password')).sendKeys('securePassword123');
-    await driver.findElement(By.css('button[type="submit"]')).click();
-    
-    await driver.wait(until.urlIs('http://localhost:3000/gymSelection.html'), 10000);
-  }, 30000); // Délai d'attente de 30 secondes
+    await page.waitForSelector('#firstName');
+    await page.type('#firstName', 'John');
+    await page.type('#lastName', 'Doe');
+    await page.type('#email', 'john.doe@example.com');
+    await page.type('#password', 'securePassword123');
+    await page.click('button[type="submit"]');
+
+    console.log('Form submitted, waiting for redirection...');
+    await page.waitForNavigation({ waitUntil: 'load', timeout: 40000 });
+    expect(page.url()).toBe('http://localhost:3000/gymSelection.html');
+    console.log('Redirection successful');
+  }, 120000); 
 });
