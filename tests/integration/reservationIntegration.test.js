@@ -3,7 +3,7 @@ const app = require('../../src/app');
 
 describe('Reservation Integration', () => {
   test('Reservation creation', async () => {
-    // Create a member first
+
     const memberResponse = await request(app)
       .post('/register')
       .send({
@@ -14,7 +14,7 @@ describe('Reservation Integration', () => {
       });
     const memberId = memberResponse.body.id;
 
-    // Create a reservation
+
     const reservationResponse = await request(app)
       .post('/reserve')
       .send({
