@@ -6,7 +6,7 @@ let server;
 beforeAll((done) => {
   server = app.listen(0, () => {
     const port = server.address().port;
-    global.port = port; // Save port to use it in tests
+    global.port = port;
     done();
   });
 });

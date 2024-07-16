@@ -20,15 +20,15 @@ describe('Reservation System Test', () => {
     await driver.findElement(By.id('email')).sendKeys('john.doe@example.com');
     await driver.findElement(By.id('password')).sendKeys('securePassword123');
     await driver.findElement(By.css('button[type="submit"]')).click();
-    
+
     await driver.wait(until.urlIs('http://localhost:3000/gymSelection.html'), 40000); 
     await driver.findElement(By.id('gym')).sendKeys('Salle 1');
     await driver.findElement(By.css('button[type="submit"]')).click();
-    
+
     await driver.wait(until.urlIs('http://localhost:3000/machineSelection.html'), 40000); 
     await driver.findElement(By.id('machine')).sendKeys('Machine 1');
     await driver.findElement(By.css('button[type="submit"]')).click();
-    
+
     await driver.wait(until.urlIs('http://localhost:3000/reservationConfirmation.html'), 40000); 
-  }, 120000); 
+  }, 120000);
 });
